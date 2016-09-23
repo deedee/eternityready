@@ -1,0 +1,11 @@
+/.project
+/.pydevproject
+/bin/
+/include/
+/lib/
+/local/*
+/local
+*.pyc
+/.settings/
+/src/
+/dbdump/
