@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<!--[if IE 7 | IE 8]>
+<html class="ie" dir="ltr" lang="en">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html dir="ltr" lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8"/>
+    <title>Eternity Ready - <%= title %></title>
+    <style type="text/css">
+        html {
+            overflow: hidden
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: 12px Arial, sans-serif;
+            background-color: #000;
+            color: #fff;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: absolute;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+        }
+
+        a {
+            color: #fff
+        }
+
+        p {
+            padding: 5px 10px
+        }
+
+        object, embed, iframe {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            background: transparent
+        }
+
+        .full-frame {
+            width: 100%;
+            height: 100%
+        }
+
+        h1, h2, h3, h4, h5 {
+            text-align: center;
+            color: #fff
+        }
+
+        #preroll_placeholder {
+            position: relative;
+            display: block;
+            width: 100%;
+            text-align: center
+        }
+
+        #preroll_placeholder embed, iframe {
+            max-width: 99%;
+        }
+
+        .preroll_countdown {
+            padding: 3px 0
+        }
+
+        .embed_logo img {
+            max-width: 95%
+        }
+
+        .restricted-video {
+            display: block;
+            height: 100%;
+            background: url('http://www.eternityready.com/uploads/thumbs/c65891bf2-1.jpg') no-repeat center center
+        }
+
+        .btn {
+            font-family: Arial, Helvetica, sans-serif;
+            border: 1px solid #c6c6c6;
+            outline: 0;
+        }
+
+        .btn-success {
+            margin: 0 auto;
+            display: block;
+            width: 130px;
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            padding: 5px 10px;
+            color: #fff;
+            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+            background-color: #77a201;
+            border-width: 2px;
+            border-style: solid;
+            border-color: #688e00 #688e00 #8eaf33;
+            border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px #000
+        }
+
+        .btn-success:hover, .btn-success:active, .btn-success.active, .btn-success.disabled, .btn-success[disabled] {
+            color: #fff;
+            background-color: #8eaf33;
+            box-shadow: none
+        }
+
+        .btn-success:active, .btn-success.active {
+            background-color: #3C0
+        }
+
+        .btn-blue {
+            color: #fff;
+            text-shadow: 0 1px 0 #2d8fc4;
+            background-color: #359ad1;
+        }
+
+        @-o-viewport {
+            width: device-width
+        }
+
+        @-moz-viewport {
+            width: device-width
+        }
+
+        @-ms-viewport {
+            width: device-width
+        }
+
+        @-webkit-viewport {
+            width: device-width
+        }
+
+        @viewport {
+            width: device-width
+        }
+    </style>
+</head>
+<body>
+<a href="/browse"><img src="/img/back.gif" alt="Back Button"></a>
+<!--<img src="/img/back.gif" alt="Back Button">-->
+<!--<span id="video_player_container">-->
+    <%- playerSpan %>
+    <!--<script height="100%" width="100%" src="http://player.ooyala.com/iframe.js#pbid=ab46ae555d05485e9742859d08d4489e&ec=lpZXN1ZzrRi00GF0EP-J0uRLkD_Pnht7"></script>-->
+<!--</span>-->
+</body>
+</html>

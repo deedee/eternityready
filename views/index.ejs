@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Eternity Ready - Family & Values Entertainment</title>
+  <meta content="Eternity Ready - Family & Values Entertainment" name="title">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, user-scalable=no" name="viewport">
+  <meta content="Eternity Ready" name="author">
+  <meta content="tv, entertainment, radio, christan, eternity, broadcast, movies, faith channels, family" name="keywords">
+  <meta content="Eternity Ready - The Premier Leader in Faith and Family Entertainment. Cut the Cord and embed 245 TV Channels" name="description">
+  <link rel="stylesheet" type="text/css" href="http://eternityready.com/A-Revolution-Slider2/css/settings.css">
+  <link rel="stylesheet" type="text/css" href="http://eternityready.com/A-Revolution-Slider2/css/layers.css">
+  <link rel="stylesheet" type="text/css" href="http://eternityready.com/A-Revolution-Slider2/css/navigation.css">
+  <link href="http://www.eternityready.com/hc-css/styles.css" rel="stylesheet" type="text/css">
+  <link href="http://www.eternityready.com/hc-css/semantic.min.css" rel="stylesheet" type="text/css">
+  <link href="http://www.eternityready.com/hc-css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+  <link rel="Stylesheet" type="text/css" href="http://www.eternityready.com/hc-css/smoothDivScroll.css" />
+  <link rel="stylesheet" type="text/css" href="http://eternityready.com/hc-css/slider.css">
+  <link rel="stylesheet" type="text/css" href="http://www.eternityready.com/hc-css/dymitr.css">
+  <link rel="stylesheet" type="text/css" href="http://eternityready.com/hc-css/main.css">
+  <link href="http://eternityready.com" rel="canonical">
+
+  <!-- new code -->
+  <link rel="stylesheet" type="text/css" href="custom-carousel.css"/>
+  <script type="text/javascript" src="http://eternityready.com/sliders-data/popular-channels.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/sliders-data/ready-channels.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/sliders-data/top-channels.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/sliders-data/international-channels.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/sliders-data/kid-and-teen-channels.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/sliders-data/world-news-channnels.js"></script>
+  <script src="http://eternityready.com/build/react.js"></script>
+  <script src="http://eternityready.com/build/react-dom.js"></script>
+  <script src="http://eternityready.com/build/rx.all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+  <script type="text/babel" src="http://eternityready.com/custom-carousel.jsx"></script>
+  <!-- new code -->
+</head>
+
+<body>
+  <section id="root"></section>
+
+  <div id="container" style="background: #1a1a1a !important;">
+
+  </div>
+
+  <script type="text/babel">
+
+var slideHoverScale = 170;
+var nextPrevSpeed = 0.8;
+var delayItemHover = 0;
+var dragDistancePrevNext = 50;
+
+
+    var Item = React.createClass({
+
+        getInitialState(){
+          return {
+            hoverTimer: null,
+            activeItem: null
+          }
+        },
+
+        itemHovered() {
+
+            if(this.props.isTouch) {
+                return;
+            }
+
+            if(!this.props.detailsSlide) {
+                var self = this;
+                this.setState({
+                    hoverTimer: setTimeout(function(){
+                        if(self.state.hoverTimer) {
+                            self.props.setActiveSlide(self.props.index);
+                        }
+                    }, delayItemHover),
+                });
+            } else {
+                this.props.setDetailsSlide(this.props.item, this.props.index);
+            }
+        },
+
+        itemMouseOut() {
+
+            if(this.props.isTouch) {
+                return;
+            }
+
+            this.setState({
+                hoverTimer: null,
+                activeStyle: false
+            });
+            this.props.setActiveSlide(null);
+        },
+
+
+        openUrl() {
+            if(!this.props.isTouch) {
+                return;
+            };
+            this.refs.play.click();
+        },
+
+        componentWillReceiveProps(nextProps) {
+
+            var self = this;
+            if(nextProps.activeSlide !== nextProps.index) {
+              if(this.state.sliderWidth !== nextProps.sliderWidth) {
+
+                  var itemWidth = self.refs.item.getBoundingClientRect().width;
+                  var itemsCount = parseInt(nextProps.sliderWidth / itemWidth);
+
+                  this.setState({
+                      sliderWidth: nextProps.sliderWidth,
+                      visibleItems: itemsCount
+                  });
+
+                  self.props.setSliderHeight(itemWidth);
+                  self.props.setVisibleItems(itemsCount);
+              }
+            }
+        },
+
+        render: function() {
+            var self = this;
+
+            var itemClass = 'carousel-item';
+            if(this.props.activeSlide === this.props.index) {
+                itemClass += ' hovered';
+            }
+
+            var itemTransform = "translateY(-50%)";
+            if(this.props.activeSlide !== null) {
+
+                if(this.props.index < this.props.activeSlide) {
+                    if(this.state.visibleItems - 1 === this.props.activeSlide) {
+                        itemTransform  += ' translateX(-' + (slideHoverScale - 100) + '%)';
+                    } else if(this.props.activeSlide !== 0) {
+                        itemTransform += ' translateX(-' + (slideHoverScale - 100) / 2 + '%)';
+                    }
+                } else if(this.props.index > this.props.activeSlide) {
+                    if(this.props.activeSlide === 0) {
+                        itemTransform  += ' translateX(' + (slideHoverScale - 100) + '%)';
+                    } else {
+                        if(this.props.activeSlide !== this.state.visibleItems - 1) {
+                            itemTransform  += ' translateX(' + (slideHoverScale - 100) / 2 + '%)';
+                        }
+                    }
+                } else {
+                    if(this.props.index === 0) {
+                        itemTransform += " translateX(" + (slideHoverScale -100) / 2 + "%) scale(" + slideHoverScale / 100+ ")";
+                    } else if(this.props.index === this.state.visibleItems - 1) {
+                        itemTransform += " translateX(-" + (slideHoverScale - 100) / 2 + "%) scale(" + slideHoverScale / 100 + ")";
+                    } else {
+                        itemTransform += " scale(" + slideHoverScale / 100 + ")";
+                    }
+                }
+            }
+
+            var itemStyle = {
+                'transform': itemTransform,
+            };
+
+            if(this.props.selectedSlide === this.props.index && this.props.detailsSlide !== null) {
+                itemClass += ' active'
+            }
+
+            var itemWrapperStyle = {
+                'backgroundImage': 'url(' + this.props.item.img + ')',
+            };
+
+            return (
+                    <div className={itemClass} ref='item'
+                         style={itemStyle}
+                         onMouseEnter={self.itemHovered}
+                         onMouseLeave={self.itemMouseOut}
+                         onClick={self.openUrl}
+                    >
+                        <div className='item-wrapper' style={itemWrapperStyle}>
+                            <span className="item-overlay"></span>
+                            <a href={this.props.item.href} ref='play'><span className="play"></span></a>
+                            <div className="infoteaser">
+                                <span className="title">{this.props.item.title}</span>
+                                <span className="stars">{ Array(this.props.item.star || 0).join('★') }</span>
+                                {
+                                    this.props.item.age ? <span className="age">{this.props.item.age}</span> : ''
+                                }
+                                <span className="year">{ this.props.item.year}</span>
+                                <span className="info">
+                                        {this.props.item.info}
+                                </span>
+                            </div>
+                            <span className="details-arrow" onClick={function() {self.props.setDetailsSlide(self.props.item, self.props.index)}}>
+                                <span className="arrow"></span>
+                            </span>
+                        </div>
+                    </div>
+            );
+        }
+    });
+
+    var ScriptosaurCarousel = React.createClass({
+
+        getInitialState() {
+            return {
+                trackPosition: 0,
+                activeSlide: null,
+                goingNext: false,
+                goingPrev: false,
+                sliderHeight: 250,
+                indexModifier: 0,
+                preparePrev: false,
+                mouseDown: false,
+                detailsSlide: null,
+                sliderHovered: false
+            }
+        },
+
+        clone(obj) {
+            if (obj === null || typeof(obj) !== 'object' || 'isActiveClone' in obj)
+                return obj;
+
+            if (obj instanceof Date)
+                var temp = new obj.constructor(); //or new Date(obj);
+            else
+                var temp = obj.constructor();
+
+            for (var key in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                    obj['isActiveClone'] = null;
+                    temp[key] = this.clone(obj[key]);
+                    delete obj['isActiveClone'];
+                }
+            }
+
+            return temp;
+        },
+
+        componentDidMount() {
+            window.addEventListener('resize' , this.reInit);
+
+            var items = this.clone(this.props.items).concat(this.clone(this.props.items));
+            //var items = this.clone(this.props.items);
+            items.map(function(item, index) {
+               item.id =  index;
+            });
+
+            this.setState({
+                items: items,
+                isTouch: this.isTouchDevice()
+            });
+
+            var self = this;
+
+            setTimeout(function() {
+                self.reInit();
+
+                var track = self.refs.track;
+           //     track.addEventListener('touchstart', self.onMouseDown);
+           //     track.addEventListener('touchend', self.onMouseUp);
+           //     track.addEventListener('touchmove', self.onMouseMove);
+
+            }, 0)
+        },
+
+
+        isTouchDevice() {
+            return (('ontouchstart' in window)
+            || (navigator.MaxTouchPoints > 0)
+            || (navigator.msMaxTouchPoints > 0));
+        },
+
+
+
+        componentWillUnmount() {
+            window.removeEventListener('resize', this.reInit);
+
+        },
+
+        reInit() {
+            var self = this;
+
+            var track = this.refs.track;
+
+            var mouseDown = Rx.Observable.fromEvent(track, 'touchstart');
+            var mouseMove = Rx.Observable.fromEvent(track, 'touchmove');
+            var mouseUp = Rx.Observable.fromEvent(track, 'touchend');
+            var mouseDrag = mouseDown.selectMany( function (downEvent) {
+                var start = downEvent.touches[0].clientX;
+                return mouseMove.takeUntil(mouseUp).select(function(moveEvent) {
+                    moveEvent.preventDefault();
+                    if(moveEvent.touches[0].clientX - start > 70) {
+                        start = moveEvent.touches[0].clientX;
+                    }
+
+                    return {
+                        delta: moveEvent.touches[0].clientX - start
+                    };
+                });;
+            });
+            mouseDrag.subscribe( function (position) {
+                var delta = position.delta;
+
+
+
+                if(!self.state.goingNext && !self.state.goingPrev && !self.state.preparePrev) {
+                        if(delta > 30) {
+                            if(!self.state.goingPrev) {
+                                self.setState({
+                                    mouseDown: false
+                                }, function() {
+                                    self.goToPrev();
+                                });
+                            }
+                        }
+
+                        if(delta < -30) {
+                            if(!self.state.goingNext) {
+                                self.setState({
+                                    mouseDown: false
+                                }, function() {
+                                    self.goToNext();
+                                });
+                            }
+                        }
+
+                }
+            });
+
+
+            this.setState({
+                isTouch: this.isTouchDevice(),
+                sliderWidth: document.body.getBoundingClientRect().width
+            });
+        },
+
+        setSliderHeight(newHeight) {
+            this.setState({
+                sliderHeight: newHeight * 1.1
+            });
+        },
+
+        setSliderHover() {
+          this.setState({
+              sliderHovered: true
+          })
+        },
+
+        removeSliderHover() {
+            this.setState({
+                sliderHovered: false
+            })
+        },
+
+        setActiveSlide(slide) {
+            this.setState({
+                activeSlide: slide
+            })
+        },
+
+        setDetailsSlide(slide, index) {
+            this.setState({
+                activeSlide: null,
+                detailsSlide: slide,
+                selectedSlide: index
+            })
+        },
+
+        setVisibleItems(visibleItems) {
+            this.setState({
+                visibleItems: visibleItems
+            })
+        },
+
+        closeDetails() {
+            this.setState({
+                detailsSlide: null
+            })
+        },
+
+        goToNext() {
+
+            if(this.state.goingNext) {
+                return;
+            }
+
+            var self = this;
+
+            this.setState({
+                goingNext: true
+            }, function() {
+
+                var items = self.state.items;
+                for(var i=0; i < self.state.visibleItems; i++) {
+                    items.push(items.shift());
+                }
+
+                var waitTime = nextPrevSpeed * 1000 + 10;
+
+                setTimeout(function() {
+                    self.setState({
+                        goingNext: false,
+                        items: items,
+                        indexModifier: 1
+                    });
+                }, waitTime);
+            });
+        },
+
+        goToPrev() {
+            if(this.state.goingPrev) {
+                return;
+            }
+
+            var self = this;
+            var items = self.state.items;
+            for(var i=0; i < self.state.visibleItems; i++) {
+                var items = this.state.items;
+                var last = items[items.length - 1];
+                items.pop(last);
+                items.unshift(last);
+            }
+
+            this.setState({
+                preparePrev: true,
+                items: items,
+                goingPrev: false
+            }, function() {
+                setTimeout(function(){
+                    self.setState({
+                        preparePrev: false,
+                        goingPrev: true
+                    }, function() {
+                        var waitTime = nextPrevSpeed * 1000 + 10;
+
+                        setTimeout(function() {
+                            self.setState({
+                                goingPrev: false,
+                                indexModifier: 1
+                            });
+                        }, waitTime);
+                    })
+                }, 0)
+
+            });
+        },
+
+        render: function() {
+            if(!this.state.items) {
+                return false;
+            }
+
+            var self = this;
+
+            var items = this.state.items.map(function(elem, index) {
+                return <Item item={elem}
+                    setSliderHeight = {self.setSliderHeight}
+                    sliderWidth = {self.state.sliderWidth}
+                    setActiveSlide={self.setActiveSlide}
+                    detailsSlide={self.state.detailsSlide}
+                    selectedSlide={self.state.selectedSlide}
+                    setDetailsSlide={self.setDetailsSlide}
+                    activeSlide={self.state.activeSlide}
+                    key={elem.id}
+                    index={index - self.state.indexModifier}
+                    setVisibleItems={self.setVisibleItems}
+                    moving = {self.state.goingNext || self.state.goingPrev}
+                    isTouch = {self.state.isTouch}
+                />
+            });
+
+            var carouselStyle = {
+                'height': this.state.sliderHeight  + 'px',
+            };
+			
+			var carouselStyle2 = {
+                'height': '207px',
+            };
+			
+            var trackStyle;
+
+            if(this.state.goingNext && !this.state.goingPrev) {
+                trackStyle = {
+                    'transition': 'all ' + nextPrevSpeed + 's',
+                    'transform': 'translateX(-' + (100 + 100 / this.state.visibleItems) + '%)',
+                    'WebkitTransitionTimingFunction': 'cubic-bezier(0.5, 0, 0.1, 1)'
+                };
+            } else if(!this.state.goingNext && !this.state.goingPrev && this.state.preparePrev) {
+                trackStyle = {
+                    'transition': 'none',
+                    'transform': 'translateX(-' + (100 + 100 / this.state.visibleItems) + '%)',
+                };
+            } else if(!this.state.goingNext && this.state.goingPrev && !this.state.preparePrev) {
+                trackStyle = {
+                    'transition': 'all ' + nextPrevSpeed + 's',
+                    'transform': 'translateX(-' + 100 / this.state.visibleItems + '%)',
+                    'WebkitTransitionTimingFunction': 'cubic-bezier(0.5, 0, 0.1, 1)'
+                }
+            } else if(!this.state.goingNext){
+                trackStyle = {
+                    'transform': this.state.indexModifier === 0? 'translateX(0%)' : 'translateX(-' + 100 / this.state.visibleItems + '%)',
+                    'transition': 'none',
+                };
+            }
+
+            return (
+                            <div>
+                    <div className='slider-container' ref='container' style={carouselStyle2}>
+                        <span className='slider-title'>{this.props.sliderTitle.toUpperCase()}</span>
+                        <div className='carousel'
+                                ref="carousel" style={carouselStyle}
+                                onMouseEnter={this.setSliderHover}
+                                onMouseLeave={this.removeSliderHover}
+                        >
+                            <div className='carousel-track' ref="track" style={trackStyle}>
+                                {items}
+                            </div>
+
+                            {
+                                this.state.sliderHovered ? <div className='next' onClick={this.goToNext}></div> : ''
+                            }
+                            {
+                                this.state.indexModifier && this.state.sliderHovered ? <div className='prev' onClick={this.goToPrev}></div> : ''
+                            }
+                        </div>
+                    </div>
+                {
+                    this.state.detailsSlide?
+                        <SliderItemDetails sliderHeight={this.state.sliderHeight}
+                                            activeSlide={this.state.detailsSlide}
+                                            closeDetails={this.closeDetails}
+                        /> : ''
+                }
+                    </div>
+            );
+        }
+    });
+
+
+    var SliderItemDetails = React.createClass({
+
+        componentDidMount() {
+            this.checkScroll();
+        },
+
+        componentWillReceiveProps(nextProps) {
+            if(this.props.activeSlide !== nextProps.activeSlide) {
+                this.refs.detailsContent.classList.add("reflow");
+                var self = this;
+                setTimeout(function() {
+                    self.refs.detailsContent.classList.remove("reflow");
+                }, 100)
+            }
+        },
+
+        checkScroll() {
+            if(document.body.scrollTop < document.body.scrollTop + this.refs.details.getBoundingClientRect().top - this.props.sliderHeight) {
+                document.body.scrollTop= document.body.scrollTop + 10;
+                setTimeout(this.checkScroll, 10)
+            }
+        },
+
+        render: function() {
+            var className = 'slider-item-details';
+            if(this.props.activeSlide) {
+                className += ' slider-item-details-active';
+            } else {
+                className += ' slider-item-details-inactive';
+            }
+
+            var test = this.props.sliderHeight / 4 - 12;
+
+            var detailsStyle = {
+              'transform': 'translateY(-' + test + 'px)'
+            };
+
+            return (
+                <div className='slider-item-details-container' ref="details" style={detailsStyle}>
+                    <div className={className} ref="detailsContent">
+                        <div className='slider-details-left'>
+                            <h2>{this.props.activeSlide ? this.props.activeSlide.detail : ''}</h2>
+                            <span className="stars">{this.props.activeSlide ? Array(this.props.activeSlide.star || 0).join('★')  : ''}</span>
+                            {
+                                this.props.activeSlide ?
+                                this.props.activeSlide.age ?
+                                    <span className="slider-details-age">{this.props.activeSlide ?
+                                        this.props.activeSlide.age : ''}</span> :
+                                        '' :
+                                        ''
+                            }
+
+                            <span className="year">{ this.props.activeSlide ? this.props.activeSlide.year : '' }</span>
+                            <span className="slider-details-info">{this.props.activeSlide ? this.props.activeSlide.info : ''}</span>
+                        </div>
+                        <div className='slider-details-right'>
+                            {this.props.activeSlide ?  <img src={this.props.activeSlide.img} className='slider-details-image'/> : ''}
+                            <div className="slider-item-details-close" onClick={this.props.closeDetails}>×</div>
+                            <div className="gradient"></div>
+                            <a href={this.props.activeSlide ? this.props.activeSlide.href : ''}><span className="play"></span></a>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+    });
+
+    var Channels = React.createClass({
+
+        render() {
+            return (
+                <div>
+                    <ScriptosaurCarousel items={poppularChannels} sliderTitle='Popular Channels'/>
+                    <ScriptosaurCarousel items={topChannels} sliderTitle='Top TV Networks'/>
+                    <ScriptosaurCarousel items={internationalChannels} sliderTitle='International Channels'/>
+                    <ScriptosaurCarousel items={readyChannels} sliderTitle='Eternity Ready Channels'/>
+                    <ScriptosaurCarousel items={kidAndTeenChannels} sliderTitle='Kids and Teenagers'/>
+                    <ScriptosaurCarousel items={worldNewsChannels} sliderTitle='World News Channels'/>
+                </div>
+            )
+        }
+    });
+
+
+    ReactDOM.render(
+            <Channels />,
+        document.getElementById('container')
+    );
+</script>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/hc-js/jquery.visible.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/jquery.themepunch.tools.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/jquery.themepunch.revolution.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/extensions/revolution.extension.video.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/extensions/revolution.extension.slideanims.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/extensions/revolution.extension.layeranimation.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/extensions/revolution.extension.navigation.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/extensions/revolution.extension.actions.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/extensions/revolution.extension.kenburn.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/extensions/revolution.extension.migration.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/A-Revolution-Slider2/js/extensions/revolution.extension.parallax.min.js"></script>
+
+  <script src="http://www.eternityready.com/hc-js/semantic.min.js"></script>
+  <script src="http://lincweb.co.uk/labs/jquery-touch-events/demo/events.js" type="text/javascript"></script>
+  <script src="http://eternityready.com/hc-js/scripts.js"></script>
+  <script src="http://eternityready.com/beta/1/js/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+  <script src="http://eternityready.com/beta/1/js/jquery.mousewheel.min.js" type="text/javascript"></script>
+  <script src="http://eternityready.com/hc-js/jquery.kinetic.min.js" type="text/javascript"></script>
+  <script src="http://eternityready.com/beta/1/slider/js/source/jquery.smoothDivScroll-1.3.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://eternityready.com/hc-js/effect.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-with-addons.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
+  <script type="text/javascript" src="http://eternityready.com/hc-js/index.js"></scrip÷t>
+  <script src="http://eternityready.com/hc-js/build/transition.css"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.24/browser.min.js"></script>
+
+
+</body>
+
+</html>
