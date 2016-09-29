@@ -4,7 +4,7 @@ const webpackConfiguration = require('../webpack.config.js')
 const webpackConfig = webpack(webpackConfiguration.config)
 
 new WebpackDevServer(webpackConfig, {
-	publicPath: '/',
+	publicPath: '/app',
 	hot: true,
 	historyApiFallback: true,
 	contentBase: './src/app',

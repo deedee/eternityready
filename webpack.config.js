@@ -15,7 +15,7 @@ const webpackConfig = {
 	],
 	output: {
 		path: path.join(__dirname, '/src/app/'),
-		publicPath: '/',
+		publicPath: '/app',
 		filename: 'app.bundle.js',
 	},
 
