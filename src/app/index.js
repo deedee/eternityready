@@ -6,9 +6,12 @@ class IndexTemplate extends React.Component{
 				<html>
 					<head>
 						<title>{this.props.title}</title>
-						{/* <link rel="stylesheet" href="/app/assets/styles/index.css" /> */}
+						<link rel="stylesheet" href="/app/css/bootstrap.css" />
+						<link rel="stylesheet" href="/app/css/main.css" />
+						<link rel="stylesheet" href="/app/containers/Player.css" />
 					</head>
 					<body>
+						enemy
 						<div id="root" dangerouslySetInnerHTML={{__html: this.props.html}}></div>
 						<script
 							type="text/json"
