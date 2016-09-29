@@ -6,16 +6,10 @@ class IndexTemplate extends React.Component{
 				<html>
 					<head>
 						<title>{this.props.title}</title>
-						<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700"/>
-						<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-						<link rel="stylesheet" href="/app/assets/styles/index.css" />
+						{/* <link rel="stylesheet" href="/app/assets/styles/index.css" /> */}
 					</head>
 					<body>
-						<div id="root"></div>
-						<div
-							id="main"
-							dangerouslySetInnerHTML={{__html: this.props.html}}
-						/>
+						<div id="root" dangerouslySetInnerHTML={{__html: this.props.html}}></div>
 						<script
 							type="text/json"
 							id="serialisedState"
@@ -26,7 +20,6 @@ class IndexTemplate extends React.Component{
 							id="serverProps"
 							dangerouslySetInnerHTML={{__html: JSON.stringify(this.props)}}
 						/>
-						<script src="//code.jquery.com/jquery-2.2.3.min.js"></script>
 						<script src="/webpack-dev-server.js"></script>
 						<script src="/app/app.bundle.js"></script>
 					</body>
