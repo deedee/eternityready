@@ -1,6 +1,6 @@
 import React from 'react'
-import Item from './Item'
-import ItemDetails from './ItemDetails'
+import Item from './Item.js'
+import ItemDetails from './ItemDetails.js'
 
 const nextPrevSpeed = 0.8
 
