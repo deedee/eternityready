@@ -13,7 +13,7 @@ import logo from '../img/logo.png'
 
 const NavBar = () => (
 
-  <Navbar fluid style={ {
+  <Navbar fluid fixedTop style={ {
     fontSize: '16px',
     fontWeight: 'bold',
 }} >

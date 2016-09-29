@@ -24,6 +24,7 @@ class Search extends Component{
       this.setState({
         searchActive: false,
       })
+      browserHistory.push(`/browse`)
     }
   }
 
@@ -41,6 +42,7 @@ class Search extends Component{
       searchActive: false,
     })
     this.refs.input.value = ''
+    browserHistory.push(`/browse`)
   }
 
   updateSearch = (e) => {
@@ -77,9 +79,9 @@ class Search extends Component{
 }
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(ownProps)
   return {
     location: state.app.locaction,
-    query: ownProps.params.query ? ownProps.params.query : null,
   }
 }
 
