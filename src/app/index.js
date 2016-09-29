@@ -4,9 +4,9 @@ const IndexTemplate = () => (
 	<html>
 		<head>
 			<title>{this.props.title}</title>
-			<link rel="stylesheet" href="/app/css/bootstrap.css" />
-			<link rel="stylesheet" href="/app/css/main.css" />
-			<link rel="stylesheet" href="/app/containers/Player.css" />
+			<link rel="stylesheet" href="/assets/css/bootstrap.css" />
+			<link rel="stylesheet" href="/assets/css/main.css" />
+			<link rel="stylesheet" href="/assets/css/Player.css" />
 		</head>
 		<body>
 			<div id="root" dangerouslySetInnerHTML={{__html: this.props.html}}></div>
