@@ -9,7 +9,7 @@ import {
   FormGroup,
   FormControl,
 } from 'react-bootstrap'
-import logo from '../img/logo.png'
+import logo from '../assets/img/logo.png'
 
 const NavBar = () => (
 

@@ -22,9 +22,27 @@ export const setLocation = (location) => ({
   location,
 })
 
+export const SET_QUERY = 'SET_QUERY'
+export const setQuery = (search) => ({
+  type: SET_QUERY,
+  search,
+})
+
+
+export const ACTIVATE_SEARCH = 'ACTIVATE_SEARCH'
+export const activateSearch = (search) => ({
+  type: ACTIVATE_SEARCH,
+})
+
+
+
+export const DEACTIVATE_SEARCH = 'DEACTIVATE_SEARCH'
+export const deactivateSearch = (search) => ({
+  type: DEACTIVATE_SEARCH,
+})
 
 export const fetchChannels = () => (dispatch, getState) => {
-  if(getState().channels.visibleChannels <= 0) {
+  if(getState().channels.visibleChannelIds <= 0) {
     dispatch(requestChannels())
     return fetch(`http://www.eternityready.com:3000/api/channels/all`,
       {mode:"cors"})
