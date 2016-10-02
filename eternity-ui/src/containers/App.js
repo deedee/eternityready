@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
 import { fetchChannels } from '../actions'
-import NavBar from '../components/NavBar'
 import Header from '../components/Header/Header'
+import Footer from '../components/Footer'
 
 class App extends Component {
   state = {
@@ -24,6 +24,7 @@ class App extends Component {
         <div className="App">
           <Header />
           {this.props.children}
+          <Footer />
         </div>
     );
   }

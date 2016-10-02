@@ -27,23 +27,18 @@ class SearchResults extends Component {
   }
 
   render() {
-    const arrays = []
-    const copy = this.props.channels.slice(0, -1)
-    while(copy.length > 0)
-      arrays.push(copy.splice(0, 6))
-    const sliders = arrays.map((elem, index) => {
-        return <SearchRow
-                key={index}
-                items={elem}
-                sliderTitle=""
-                setVisibleItems={this.setVisibleItems}
-                />
+    const sliders = this.props.channels.map((channel, index) => {
+        return (
+          <div style={{flex: 1, textAlign: 'center', width: '100%', maxWidth: '300px', padding: '0 10px'}}>
+            <img src={channel.thumb} alt={channel.title}/>
+            <div style={{fontWeight: 700}}>{channel.title}</div>
+          </div>
+        )
     })
 
     return (
-      <div className="main">
-        {this.props.channels.length === 0 ?
-           <div>No results where found for your search.</div> : <div>{sliders}</div>}
+      <div className="main" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+         {sliders}
       </div>
     )
   }
