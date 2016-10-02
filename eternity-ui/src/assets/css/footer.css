@@ -7,9 +7,7 @@ footer {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  position: absolute;
   width: 100%;
-  bottom: 0;
 }
 
 footer > p, footer {
