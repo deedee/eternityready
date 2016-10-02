@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getVisibleChannels } from '../reducers/channels'
+import { setQuery } from '../actions/'
 import SearchRow from '../components/SearchRow'
-import Navbar from '../components/NavBar'
-
 
 class SearchResults extends Component {
 
@@ -13,6 +12,14 @@ class SearchResults extends Component {
   static defaultProps = {
     channels: [],
   }
+  constructor(props) {
+    super(props);
+    const { search, query, setQuery } = this.props
+    if(search !== query){
+      setQuery(query)
+    }
+  }
+
   setVisibleItems = (visibleItems)=> {
     this.setState({
       visibleItems: visibleItems
@@ -20,24 +27,18 @@ class SearchResults extends Component {
   }
 
   render() {
-    const arrays = []
-    const copy = this.props.channels.slice(0, -1)
-    while(copy.length > 0)
-      arrays.push(copy.splice(0, 6))
-    const sliders = arrays.map((elem, index) => {
-        return <SearchRow
-                key={index}
-                items={elem}
-                sliderTitle=""
-                setVisibleItems={this.setVisibleItems}
-                />
+    const sliders = this.props.channels.map((channel, index) => {
+        return (
+          <div style={{flex: 1, textAlign: 'center', width: '100%', maxWidth: '300px', padding: '0 10px'}}>
+            <img src={channel.thumb} alt={channel.title}/>
+            <div style={{fontWeight: 700}}>{channel.title}</div>
+          </div>
+        )
     })
 
     return (
-      <div className="main">
-        <Navbar />
-        {this.props.channels.length === 0 ?
-           <div>No results where found for your search.</div> : <div>{sliders}</div>}
+      <div className="main" style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center'}}>
+         {sliders}
       </div>
     )
   }
@@ -45,9 +46,10 @@ class SearchResults extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    channels: getVisibleChannels(state, ownProps.params.query)
+    channels: getVisibleChannels(state, ownProps.params.query),
+    search: state.search.query,
+    query: ownProps.params.query,
   }
 }
 
-export default connect(mapStateToProps)(SearchResults)
-
+export default connect(mapStateToProps, {setQuery})(SearchResults)

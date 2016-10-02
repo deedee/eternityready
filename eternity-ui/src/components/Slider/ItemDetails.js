@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router'
+
 var ItemDetails = React.createClass({
 
   componentDidMount() {
@@ -34,12 +34,12 @@ var ItemDetails = React.createClass({
       'transform': 'translateY(-' + test + 'px)'
     };
 
-    return (            
+    return (
       <div className='slider-item-details-container' ref="details" style={detailsStyle}>
         <div className={className} ref="detailsContent">
           <div className='slider-details-left'>
             <h2>{this.props.activeSlide ? this.props.activeSlide.title : ''}</h2>
-            <span className="stars">{this.props.activeSlide ? Array(this.props.activeSlide.star || 0).join('★')  : ''}</span>
+            <span className="stars">{this.props.activeSlide ? Array(this.props.activeSlide.rating || 0).join('★')  : ''}</span>
             {
               this.props.activeSlide ?
                 this.props.activeSlide.age ?
@@ -58,10 +58,10 @@ var ItemDetails = React.createClass({
             <div className="gradient"></div>
 
             {
-              this.props.activeSlide && this.props.activeSlide._id ?
-                <Link to={`/player/${this.props.activeSlide._id}`}>
+              this.props.activeSlide && this.props.activeSlide.slug ?
+                <a href={`http://www.eternityready.com/channel/${this.props.activeSlide.slug}`}>
                     <div className="play"></div>
-                </Link> :
+                </a> :
                 <a href={this.props.activeSlide.href}>
                   <div className="play"></div>
                 </a>

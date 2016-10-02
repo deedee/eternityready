@@ -148,8 +148,9 @@ const Item = React.createClass({
                 age={this.props.item.age}
                 year={this.props.item.year}
                 description={this.props.item.description}
-                star={this.props.item.star}
+                rating={this.props.item.rating}
                 thumb={this.props.item.thumb}
+                slug={this.props.item.slug}
               />
             }
           </span>

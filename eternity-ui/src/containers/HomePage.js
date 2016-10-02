@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
-import NavBar from '../components/NavBar'
 import Slider from '../components/Slider/'
 import { connect } from 'react-redux'
-import { readyChannels, topChannels } from '../data/staticChannels'
-
+import Billboard from '../components/Billboard'
+// import { readyChannels, topChannels } from '../data/staticChannels'
 class HomePage extends Component {
 
   static propTypes = {
@@ -21,11 +20,18 @@ class HomePage extends Component {
     })
 
     return (
-      <div className="main">
-        <NavBar />
-        <Slider items={topChannels} sliderTitle="Top Channels"/>
-        <Slider items={readyChannels} sliderTitle="Eternity Ready Channels"/>
-        { sliders}
+      <div>
+        <Billboard />
+        <ins className="adsbygoogle"
+          style={{display: 'block'}}
+          data-ad-client="ca-pub-8022147088754346"
+          data-ad-slot="4861967110"
+          data-ad-format="auto"></ins>
+
+        {/*<Slider items={topChannels} sliderTitle="Top Channels"/>
+                        <Slider items={readyChannels} sliderTitle="Eternity Ready Channels"/>
+         */}
+         { sliders}
       </div>
     )
   }

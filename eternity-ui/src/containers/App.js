@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux'
 import { fetchChannels } from '../actions'
-import HomePage from './HomePage'
-import Player from './Player'
-import SearchResults from './SearchResults'
-import { Match, Miss, Redirect } from 'react-router'
+import Header from '../components/Header/Header'
+import Footer from '../components/Footer'
 
 class App extends Component {
   state = {
@@ -17,10 +15,6 @@ class App extends Component {
     byCategory: {},
   }
 
-  setQueryString(query) {
-    this.setState({queryStringy: query})
-  }
-
   componentDidMount() {
     this.props.fetchChannels()
   }
@@ -28,7 +22,9 @@ class App extends Component {
   render() {
     return (
         <div className="App">
+          <Header />
           {this.props.children}
+        {/*<Footer />*/}
         </div>
     );
   }
